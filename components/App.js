@@ -8,6 +8,7 @@ export default ({ children }) => (
       body {
         margin: 0;
         padding: 25px 50px;
+        background-color: rgba(200, 215, 215, 0.8);
       }
       a {
         color: #22BAD9;
@@ -35,6 +36,6 @@ export default ({ children }) => (
       button:focus {
         outline: none;
       }
-    `}</style>
+      `}</style>
   </main>
 )
