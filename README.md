@@ -23,5 +23,9 @@ Deploy it to the cloud with [now](https://zeit.co/now) ([download](https://zeit.
 now
 ```
 
-## The idea behind the example
-By default, Apollo Client creates its own internal Redux store to manage queries and their results. If you are already using Redux for the rest of your app, [you can have the client integrate with your existing store instead](http://dev.apollodata.com/react/redux.html). This example is identical to the [`with-apollo`](https://github.com/zeit/next.js/tree/master/examples/with-apollo) with the exception of this Redux store integration.
+## A new combination of services on the web give a developer an immediate deployment, backend app solution. 
+This app is a simple demo of two amazing services Next.js and Graph.cool which represent a full stack web app solution. 
+
+A combination of React, Graphl, and Redux. Meet the players.
+
+[you can have the client integrate with your existing store instead](http://dev.apollodata.com/react/redux.html)
