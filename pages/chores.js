@@ -1,13 +1,16 @@
 // import Tasks from '../components/TaskList'
 import withData from '../lib/withData'
 import App from '../components/App'
+import Sidebar from '../components/Sidebar'
+import RightBar from '../components/RightBar'
+import Chores from '../components/Chores'
 
 const Players = () => (
-  <div style={styles.container}>
+  <div style={styles.players}>
     <div style={styles.title}>
       The Players
     </div>
-    <div style={styles.head}>
+    <div style={styles.header}>
       <img style={styles.img} src="/static/bret.jpg" />
       <img style={styles.img} src="/static/brendan.jpg" />
       <img style={styles.img} src="/static/clay.jpg" />
@@ -15,12 +18,30 @@ const Players = () => (
   </div>
 )
 
+const Emoji = () => (
+  <div>
+    &#x260F;
+  </div>
+)
+
+export default withData((props) => (
+  <div style={styles.app}>
+    <Sidebar name="Chore List" collection={<Chores/>} />
+    <Players />
+    <Sidebar name="Emoticons" collection={<Emoji/>} />
+  </div>
+))
+
 const styles = {
-  container: {
+  app: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: 'rgba(200, 215, 215, 0.8)',
+  },
+  players: {
     display: 'flex',
     flexDirection: 'column',
-    width: 1400,
-    margin: 'auto',
   },
   title: {
     fontSize: 50,
@@ -28,33 +49,15 @@ const styles = {
     color: 'rgba(44, 45, 45, 1)',
     margin: '38px 18px 38px 38px',
   },
-  head: {
+  header: {
     backgroundColor: 'rgba(44, 45, 45, 1)',
     display: 'flex',
-    maxWidth: '100%',
     alignItems: 'center',
-    border: '4px solid #1A5276',
-    borderRadius: 18,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    borderRadius: 4,
   },
   img: {
     padding: 40,
-  }
+  },
 }
 
-const Tasks = (tasks) => (
-  <div>Tasks</div>
-)
-
-const AddTask = () => (
-  <div>Add</div>
-)
-
-export default withData((props) => (
-  <App>
-    <Players />
-    <Tasks/>
-    <AddTask/>
-  </App>
-))
