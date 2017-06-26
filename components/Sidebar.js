@@ -24,7 +24,7 @@ const styles = {
   collection: {
     width: 280,
     height: 800,
-    backgroundColor: 'rgba(44, 45, 45, 0.8)',
+    ackgroundColor: 'rgba(44, 45, 45, 0.8)',
     borderRadius: 4, 
   },
 }

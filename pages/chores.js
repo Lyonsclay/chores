@@ -19,15 +19,13 @@ const Players = () => (
   </div>
 )
 
-const emoticons = (row, col) => [...Array(2620)].map((l, i) => `&#${i + 9973};`)[Math.trunc(row/4) + col]
+const emoticons = [...Array(2620)].map((l, i) => String.fromCharCode(i))
 
 const Emoji = ({ columnIndex, rowIndex }) => (
   <div style={styles.emoji}>
-    {emoticons(rowIndex, columnIndex)}
+    {String.fromCharCode(Math.trunc(rowIndex / 4) + columnIndex + 9990)}
   </div>
 )
-
-
 
 export default withData((props) => (
   <div style={styles.app}>
@@ -35,10 +33,10 @@ export default withData((props) => (
     <Players />
     <div style={styles.grid}>
       <Grid
-        columnCount={4}
+        columnCount={8}
         columnWidth={40}
         height={800}
-        width={240}
+        width={340}
         rowCount={100}
         rowHeight={40}
         cellRenderer={Emoji}
@@ -81,9 +79,10 @@ const styles = {
     borderRadius: 4,
   },
   grid: {
-    width: 300, 
+    width: 400, 
   },
   emoji: {
     fontSize: 38,
+    width: 42,
   },
 }
