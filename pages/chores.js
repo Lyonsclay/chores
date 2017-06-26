@@ -1,4 +1,5 @@
 // import Tasks from '../components/TaskList'
+import { Grid } from 'react-virtualized'
 import withData from '../lib/withData'
 import App from '../components/App'
 import Sidebar from '../components/Sidebar'
@@ -18,17 +19,31 @@ const Players = () => (
   </div>
 )
 
-const Emoji = () => (
-  <div>
-    &#x260F;
+const emoticons = (row, col) => [...Array(2620)].map((l, i) => `&#${i + 9973};`)[Math.trunc(row/4) + col]
+
+const Emoji = ({ columnIndex, rowIndex }) => (
+  <div style={styles.emoji}>
+    {emoticons(rowIndex, columnIndex)}
   </div>
 )
+
+
 
 export default withData((props) => (
   <div style={styles.app}>
     <Sidebar name="Chore List" collection={<Chores/>} />
     <Players />
-    <Sidebar name="Emoticons" collection={<Emoji/>} />
+    <div style={styles.grid}>
+      <Grid
+        columnCount={4}
+        columnWidth={40}
+        height={800}
+        width={240}
+        rowCount={100}
+        rowHeight={40}
+        cellRenderer={Emoji}
+        />
+    </div>
   </div>
 ))
 
@@ -42,6 +57,8 @@ const styles = {
   players: {
     display: 'flex',
     flexDirection: 'column',
+    paddingLeft: 95,
+    paddingRight: 95,
   },
   title: {
     fontSize: 50,
@@ -53,11 +70,20 @@ const styles = {
     backgroundColor: 'rgba(44, 45, 45, 1)',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-around',
     flexDirection: 'row',
     borderRadius: 4,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   img: {
-    padding: 40,
+    maxWidth: '30%',
+    borderRadius: 4,
+  },
+  grid: {
+    width: 300, 
+  },
+  emoji: {
+    fontSize: 38,
   },
 }
-

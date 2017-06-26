@@ -14,6 +14,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     width: 280,
+    marginTop: 95,
   },
   title: {
     fontSize: 38,
@@ -23,7 +24,7 @@ const styles = {
   collection: {
     width: 280,
     height: 800,
-    backgroundColor: 'rgba(44, 45, 45, 1)',
+    backgroundColor: 'rgba(44, 45, 45, 0.8)',
     borderRadius: 4, 
   },
 }
