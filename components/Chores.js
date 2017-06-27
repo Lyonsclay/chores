@@ -5,12 +5,11 @@ const CHORES_PER_PAGE = 10
 function ChoreList ({ data: { allChores, loading }, loadMoreChores }) {
   if (allChores && allChores.length) {
     return (
-      <section>
-        <ul>
+      <section style={styles.section}>
+        <ul style={styles.ul}>
           {allChores.map((chore, index) =>
             <li style={styles.li} key={chore.id}>
               <div>
-                <span>{index + 1}. </span>
                 <p>{chore.title}</p>
               </div>
             </li>
@@ -38,9 +37,16 @@ const allChores = gql`
 `
 
 const styles = {
+  section: {
+    borderRadius: 4,
+    backgroundColor: 'rgba(44, 55, 55, 0.8)',
+  },
+  ul: {
+    listStyleType: 'none',
+    padding: '20px 20px 20px 20px',
+  },
   li: {
-    color: 'rgba(200, 215, 215, 0.8)',
-    color: 'white',
+    color: 'rgba(200, 215, 215, 1)',
   },
 }
 

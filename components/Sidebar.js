@@ -1,5 +1,5 @@
-const Sidebar = ({ name, collection }) => (
-  <div style={styles.sidebar}>
+const Sidebar = ({ name, collection, style = {} }) => (
+  <div style={{...styles.sidebar, ...style}}>
     <div style={styles.title}>
       {name}
     </div>
@@ -13,19 +13,18 @@ const styles = {
   sidebar: {
     display: 'flex',
     flexDirection: 'column',
-    width: 280,
     marginTop: 95,
   },
   title: {
     fontSize: 38,
     fontWeight: 'bold',
     color: 'rgba(44, 45, 45, 1)',
+    textAlign: 'center',
   },
   collection: {
-    width: 280,
     height: 800,
-    ackgroundColor: 'rgba(44, 45, 45, 0.8)',
-    borderRadius: 4, 
+    borderRadius: 4,
+    fontSize: 26,
   },
 }
 
