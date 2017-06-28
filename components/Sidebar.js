@@ -13,7 +13,7 @@ const styles = {
   sidebar: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 95,
+    marginTop: 140,
   },
   title: {
     fontSize: 38,
@@ -22,6 +22,7 @@ const styles = {
     textAlign: 'center',
   },
   collection: {
+    marginTop: 30,
     height: 800,
     borderRadius: 4,
     fontSize: 26,

@@ -39,14 +39,16 @@ const allChores = gql`
 const styles = {
   section: {
     borderRadius: 4,
-    backgroundColor: 'rgba(44, 55, 55, 0.8)',
+    // backgroundColor: 'rgba(44, 55, 55, 0.8)',
+    // backgroundColor: 'brown',
+    border: '2px solid gray',
   },
   ul: {
     listStyleType: 'none',
     padding: '20px 20px 20px 20px',
   },
   li: {
-    color: 'rgba(200, 215, 215, 1)',
+    color: 'rgba(40, 55, 55, 1)',
   },
 }
 

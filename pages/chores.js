@@ -7,22 +7,32 @@ import Emoji from '../components/Emoji'
 import Players from '../components/Players'
 
 export default withData((props) => (
-  <div style={styles.app}>
-    <Sidebar
-      name="Chores"
-      collection={<Chores/>}
-      style={styles.chores}
-      />
-    <Players />
-    <Emoji />
+  <div style={styles.main}>
+    <div style={styles.app}>
+      <Sidebar
+        name="Chores"
+        collection={<Chores/>}
+        style={styles.chores}
+        />
+      <Players />
+      <Emoji />
+    </div>
   </div>
 ))
 
 const styles = {
+  main: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(200, 215, 215, 0.8)',
+
+  },
   app: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: 'rgba(200, 215, 215, 0.8)',
+    justifyContent: 'space-between',
+    maxWidth: 1800,
   },
   players: {
     display: 'flex',
@@ -45,7 +55,7 @@ const styles = {
   },
   emoji: {
     paddingTop: 20,
-    width: 400, 
+    width: 400,
     paddingRight: 30,
   },
   emoji: {
