@@ -1,24 +1,24 @@
 import { gql, graphql } from 'react-apollo'
 
-const CHORES_PER_PAGE = 10
+const PLAYERS_PER_PAGE = 10
 
-function ChoreList ({ data: { allChores, loading }, loadMoreChores }) {
-  if (allChores && allChores.length) {
+function PlayerList ({ data: { allPlayers, loading }, loadMorePlayers }) {
+  if (allPlayers && allPlayers.length) {
     return (
       <section>
         <ul>
-          {allChores.map((chore, index) =>
-            <li key={chore.id}>
+          {allPlayers.map((player, index) =>
+            <li key={player.id}>
               <div>
                 <span>{index + 1}. </span>
-                <p>{chore.title}</p>
-                <p>{chore.description}</p>
+                <p>{player.name}</p>
+                <p>{player.description}</p>
               </div>
             </li>
           )}
         </ul>
         <style jsx>{`
-          section {
+ section {
             padding-bottom: 20px;
           }
           li {
@@ -61,16 +61,16 @@ function ChoreList ({ data: { allChores, loading }, loadMoreChores }) {
   return <div>Loading</div>
 }
 
-const allChores = gql`
-  query allChores($first: Int, $skip: Int) {
-    allChores(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+const allPlayers = gql`
+  query allPlayers($first: Int, $skip: Int) {
+    allPlayers(orderBy: createdAt_DESC, first: $first, skip: $skip) {
       id
-      title
+      name
       description
       createdAt
       updatedAt
     },
-    _allChoresMeta {
+    _allPlayersMeta {
       count
     }
   }
@@ -78,7 +78,7 @@ const allChores = gql`
 
 // The `graphql` wrapper executes a GraphQL query and makes the results
 // available on the `data` prop of the wrapped component (PostList)
-export default graphql(allChores, {
+export default graphql(allPlayers, {
   options: {
     variables: {
       skip: 0,
@@ -86,10 +86,10 @@ export default graphql(allChores, {
   },
   props: ({ data }) => ({
     data,
-    loadMoreChores: () => {
+    loadMorePlayers: () => {
       return data.fetchMore({
         variables: {
-          skip: data.allChores.length
+          skip: data.allPlayers.length
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
           if (!fetchMoreResult) {
@@ -97,10 +97,10 @@ export default graphql(allChores, {
           }
           return Object.assign({}, previousResult, {
             // Append the new posts results to the old one
-            allChores: [...previousResult.allChores, ...fetchMoreResult.allChores]
+            allPlayers: [...previousResult.allPlayers, ...fetchMoreResult.allPlayers]
           })
         }
       })
     }
   })
-})(ChoreList)
+})(PlayerList)

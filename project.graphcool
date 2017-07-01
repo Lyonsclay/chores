@@ -1,0 +1,46 @@
+# projectId: cj4lfaz2k6psg01643a2dq9dn
+# version: 13
+
+type File implements Node {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type User implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+}
+
+type Chore implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+  title: String!
+  description: String
+  priority: Int
+}
+
+type Player implements Node {
+  id: ID! @isUnique
+  name: String!
+  description: String
+  photoUrl: String
+  emoticons: [Emoticon!]! @relation(name: "Props")
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Emoticon implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+  character: String!
+  player: Player @relation(name: "Props")
+}
