@@ -23,7 +23,7 @@ export default withData((props) => (
 const styles = {
   section: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'top',
     justifyContent: 'space-between',
     maxWidth: '70%',

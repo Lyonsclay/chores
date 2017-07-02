@@ -7,6 +7,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "global": "^4.3.2",
+    "graphcool": "^1.1.1",
     "graphql": "^0.9.3",
     "isomorphic-fetch": "^2.2.1",
     "next": "latest",

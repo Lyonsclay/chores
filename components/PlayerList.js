@@ -1,3 +1,4 @@
+import React from 'react'
 import { gql, graphql } from 'react-apollo'
 import RemovePlayer, { deletePlayer } from '../components/removePlayer'
 
@@ -6,14 +7,22 @@ const PLAYERS_PER_PAGE = 10
 function PlayerList ({ data: { allPlayers, loading }, loadMorePlayers }) {
   function Team({ deletePlayer }) {
     return (
-      <ul>
+      <ul style={styles.players}>
         {allPlayers.map((player, index) => (
-          <li key={player.id} >
-            <div>
-              <span>{index + 1}. </span>
-              <p>{player.name}</p>
-              <p>{player.description}</p>
-              <img source={player.photoUrl} />
+          <li
+            key={player.id}
+            style={{ listStyleType: 'none' }}
+            >
+            <div >
+              <div style={styles.intro}>
+                <p>{player.name}</p>
+              </div>
+              <img
+                src={player.photoUrl}
+                width="270px"
+                style={styles.img}
+                />
+              <p style={styles.description}>{player.description}</p>
               <button
                 name="button"
                 onClick={() => deletePlayer(player.id)}
@@ -26,6 +35,26 @@ function PlayerList ({ data: { allPlayers, loading }, loadMorePlayers }) {
         ))}
       </ul>
     )
+  }
+
+  const styles = {
+    players: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    intro: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
+    img: {
+      outline: '8px solid rgba(24, 23, 23, 0.7)',
+      outlineOffset: -8,
+    },
+    description: {
+      width: 250,
+    },
   }
 
   const Players = graphql(deletePlayer, {
@@ -59,6 +88,7 @@ function PlayerList ({ data: { allPlayers, loading }, loadMorePlayers }) {
           li {
             display: block;
             margin-bottom: 10px;
+            list-style-type: none;
           }
           div {
             align-items: center;
@@ -78,6 +108,7 @@ function PlayerList ({ data: { allPlayers, loading }, loadMorePlayers }) {
           ul {
             margin: 0;
             padding: 0;
+            list-style: none;
           }
           button {
             margin-left: 10px;
@@ -103,6 +134,7 @@ const allPlayers = gql`
     allPlayers(orderBy: createdAt_DESC, first: $first, skip: $skip) {
       id
       name
+      photoUrl
       description
       createdAt
       updatedAt

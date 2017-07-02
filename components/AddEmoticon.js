@@ -1,30 +1,23 @@
 import { gql, graphql } from 'react-apollo'
 
-function AddEmoticon ({ createEmoticon }) {
+const AddEmoticon = () => ({ createEmoticon }) => {
   function handleSubmit (e) {
     e.preventDefault()
 
-    let title = e.target.elements.title.value
-    let description = e.target.elements.description.value
+    let character = e.target.elements.character.value
 
-    if (title === '') {
-      window.alert('Please add at least a title.')
-      return false
-    }
-
-    createEmoticon(title, description)
+    createEmoticon(character, player)
 
     // reset form
-    e.target.elements.title.value = ''
-    e.target.elements.description.value = ''
   }
 }
 
 const createEmoticon = gql`
-  mutation createEmoticon($character: String!, $player: ID!) {
+  mutation createEmoticon($character: String!, $player: Player!) {
     createEmoticon(title: $title) {
       id
-      title
+      character
+      player
       createdAt
       }
   }

@@ -8,7 +8,7 @@ const AddPlayer = ({ createPlayer }) => {
     const name = e.target.elements.name.value
     const description = e.target.elements.description.value
     const photoUrl = e.target.elements.photoUrl.value
-    createPlayer(name, description, photoUrl)
+    createPlayer(name, photoUrl, description)
 
     // reset form
     e.target.elements.name.value = ''
@@ -48,7 +48,7 @@ const AddPlayer = ({ createPlayer }) => {
 }
 
 const createPlayer = gql`
-  mutation createPlayer($name: String!, $photUrl: String, $description: String) {
+  mutation createPlayer($name: String!, $photoUrl: String, $description: String) {
     createPlayer(name: $name, photoUrl: $photoUrl, description: $description) {
       id
       name

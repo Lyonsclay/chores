@@ -1,3 +1,4 @@
+import React from 'react'
 import { Grid } from 'react-virtualized'
 import Sidebar from './Sidebar'
 import addEmoticon from './AddEmoticon'
@@ -36,6 +37,6 @@ const styles = {
   },
   emoji: {
     fontSize: 44,
-    width: 240, 
+    width: 240,
   },
 }
