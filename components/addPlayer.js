@@ -5,21 +5,26 @@ const AddPlayer = ({ createPlayer }) => {
   function handleSubmit (e) {
     e.preventDefault()
 
-    let name = e.target.elements.name.value
-    let description = e.target.elements.description.value
-    createPlayer(name, description)
+    const name = e.target.elements.name.value
+    const description = e.target.elements.description.value
+    const photoUrl = e.target.elements.photoUrl.value
+    createPlayer(name, description, photoUrl)
 
     // reset form
     e.target.elements.name.value = ''
     e.target.elements.description.value = ''
+    e.target.elements.photoUrl.value = ''
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <h1>Add Player</h1>
-        <input placeholder='name' name='name' />
-        <input placeholder='description' name='description' />
+        <div>
+          <input placeholder='name' name='name' />
+          <input placeholder='photo url' name='photoUrl' />
+        </div>
+        <textarea placeholder='description' name='description' rows='4' cols='30' />
         <button type='submit'>Add</button>
         <style jsx>{`
         form {
@@ -33,6 +38,9 @@ const AddPlayer = ({ createPlayer }) => {
         input {
           margin-bottom: 10px;
         }
+        textarea {
+          border: none;
+        }
           `}</style>
       </form>
     </div>
@@ -40,10 +48,11 @@ const AddPlayer = ({ createPlayer }) => {
 }
 
 const createPlayer = gql`
-  mutation createPlayer($name: String!, $description: String!) {
-    createPlayer(name: $name, description: $description) {
+  mutation createPlayer($name: String!, $photUrl: String, $description: String) {
+    createPlayer(name: $name, photoUrl: $photoUrl, description: $description) {
       id
       name
+      photoUrl
       description
       updatedAt
       createdAt
@@ -53,13 +62,12 @@ const createPlayer = gql`
 
 export default graphql(createPlayer, {
   props: ({ mutate }) => ({
-    createPlayer: (name, description) => mutate({
-      variables: { name, description },
+    createPlayer: (name, photoUrl, description) => mutate({
+      variables: { name, photoUrl, description },
       updateQueries: {
         allPlayers: (previousResult, { mutationResult }) => {
           const newPlayer = mutationResult.data.createPlayer
           return Object.assign({}, previousResult, {
-            // Append the new chore
             allPlayers: [newPlayer, ...previousResult.allPlayers]
           })
         }

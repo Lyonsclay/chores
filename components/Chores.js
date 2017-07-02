@@ -30,7 +30,7 @@ const allChores = gql`
       createdAt
       updatedAt
     },
-    _allPostsMeta {
+    _allChoresMeta {
       count
     }
   }

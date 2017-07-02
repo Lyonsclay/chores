@@ -30,6 +30,7 @@ type Chore implements Node {
 type Player implements Node {
   id: ID! @isUnique
   name: String!
+  photoUrl: String
   description: String
   photoUrl: String
   emoticons: [Emoticon!]! @relation(name: "Props")

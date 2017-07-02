@@ -1,6 +1,8 @@
 import { Grid } from 'react-virtualized'
 import Sidebar from './Sidebar'
-const handleClick = (event) => console.log(event.currentTarget)
+import addEmoticon from './AddEmoticon'
+
+const handleClick = (event) => addEmoticon(event.currentTarget.innerHTML)
 const emoticons = (row, col) => String.fromCodePoint(row * 4 + col + 127902)
 
 const EmojiRenderer = ({ columnIndex, rowIndex, key, style }) => (

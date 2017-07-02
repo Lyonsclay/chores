@@ -1,4 +1,5 @@
 import { gql, graphql } from 'react-apollo'
+
 function AddEmoticon ({ createEmoticon }) {
   function handleSubmit (e) {
     e.preventDefault()
