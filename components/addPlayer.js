@@ -75,3 +75,5 @@ export default graphql(createPlayer, {
     })
   })
 })(AddPlayer)
+
+// export default graphql(createPlayer)(AddPlayer)

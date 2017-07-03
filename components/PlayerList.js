@@ -1,86 +1,13 @@
 import React from 'react'
 import { gql, graphql } from 'react-apollo'
-import RemovePlayer, { deletePlayer } from '../components/removePlayer'
+import RemovePlayer from '../components/removePlayer'
 
 const PLAYERS_PER_PAGE = 10
-
-function PlayerList ({ data: { allPlayers, loading }, loadMorePlayers }) {
-  function Team({ deletePlayer }) {
-    return (
-      <ul style={styles.players}>
-        {allPlayers.map((player, index) => (
-          <li
-            key={player.id}
-            style={{ listStyleType: 'none' }}
-            >
-            <div >
-              <div style={styles.intro}>
-                <p>{player.name}</p>
-              </div>
-              <img
-                src={player.photoUrl}
-                width="270px"
-                style={styles.img}
-                />
-              <p style={styles.description}>{player.description}</p>
-              <button
-                name="button"
-                onClick={() => deletePlayer(player.id)}
-                style={{ backgroundColor: 'rgba(180, 50, 50, 1)'}}
-                >
-                Remove
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    )
-  }
-
-  const styles = {
-    players: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    intro: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-    },
-    img: {
-      outline: '8px solid rgba(24, 23, 23, 0.7)',
-      outlineOffset: -8,
-    },
-    description: {
-      width: 250,
-    },
-  }
-
-  const Players = graphql(deletePlayer, {
-    props: ({ mutate }) => ({
-      deletePlayer: (id) => mutate({
-        variables: { id },
-        updateQueries: {
-          allPlayers: (previousResult, { mutationResult }) => {
-            return Object.assign(
-              {},
-              previousResult,
-              {
-                allPlayers: previousResult.allPlayers.filter(player => id !== player.id)
-              }
-            )
-          }
-        }
-      })
-    })
-    // })(({ deletePlayer }) => Team(allPlayers, deletePlayer))
-  })(Team)
-
+function PlayerList({ data: { allPlayers } }) {
   if (allPlayers && allPlayers.length) {
     return (
       <section >
-        <Players />
+        <RemovePlayer allPlayers={allPlayers} />
         <style jsx>{`
           section {
             padding-bottom: 20px;
@@ -161,6 +88,7 @@ export default graphql(allPlayers, {
           skip: data.allPlayers.length
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
+          console.log(previousResult)
           if (!fetchMoreResult) {
             return previousResult
           }
