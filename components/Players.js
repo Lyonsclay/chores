@@ -1,18 +1,22 @@
-const Players = () => (
-  <div style={styles.players}>
-    <div style={styles.title}>
-      The Players
-    </div>
-    <div style={styles.header}>
-      <img style={styles.img} src="/static/bret.jpg" />
-      <img style={styles.img} src="/static/brendan.jpg" />
-      <img style={styles.img} src="/static/clay.jpg" />
-    </div>
-  </div>
-)
+import { gql, graphql } from 'react-apollo'
 
-export default Players
-
+const Players = ({ data: { allPlayers } }) => {
+  if (!(allPlayers && allPlayers.length)) { return (<div>loading</div>)}
+  return (
+    <div style={styles.players}>
+      <div style={styles.title}>
+        The Players
+      </div>
+      <div style={styles.header}>
+        {
+          allPlayers.map(player => (
+            <img style={styles.img} src={player.photoUrl} />
+          ))
+        }
+    </div>
+      </div>
+  )
+}
 const styles = {
   players: {
     display: 'flex',
@@ -42,3 +46,48 @@ const styles = {
     borderRadius: 4,
   },
 }
+
+const allPlayers = gql`
+  query allPlayers($first: Int, $skip: Int) {
+    allPlayers(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+      id
+      name
+      photoUrl
+      description
+      createdAt
+      updatedAt
+    },
+    _allPlayersMeta {
+      count
+    }
+  }
+`
+
+// The `graphql` wrapper executes a GraphQL query and makes the results
+// available on the `data` prop of the wrapped component (PostList)
+export default graphql(allPlayers, {
+  options: {
+    variables: {
+      skip: 0,
+    }
+  },
+  props: ({ data }) => ({
+    data,
+    loadMorePlayers: () => {
+      return data.fetchMore({
+        variables: {
+          skip: data.allPlayers.length
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) {
+            return previousResult
+          }
+          return Object.assign({}, previousResult, {
+            // Append the new posts results to the old one
+            allPlayers: [...previousResult.allPlayers, ...fetchMoreResult.allPlayers]
+          })
+        }
+      })
+    }
+  })
+})(Players)

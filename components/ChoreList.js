@@ -2,7 +2,7 @@ import { gql, graphql } from 'react-apollo'
 
 const CHORES_PER_PAGE = 10
 
-function ChoreList ({ data: { allChores, loading }, loadMoreChores }) {
+function ChoreList ({ data: { allChores, loading } }) {
   if (allChores && allChores.length) {
     return (
       <section>

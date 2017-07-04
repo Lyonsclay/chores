@@ -6,7 +6,19 @@ import Chores from '../components/Chores'
 import Emoji from '../components/Emoji'
 import Players from '../components/Players'
 
-export default withData((props) => (
+export default withData((props) => {
+  let player
+  if (props &&
+      props.serverState &&
+      props.serverState.apollo &&
+      props.serverState.apollo.data && 
+      props.serverState.apollo.data.allPlayers
+     ) {
+    player = props.serverState.apollo.data.allPlayers[1]
+  } else {
+    player = {}
+  }
+  return (
   <div style={styles.main}>
     <div style={styles.app}>
       <Sidebar
@@ -15,10 +27,10 @@ export default withData((props) => (
         style={styles.chores}
         />
       <Players />
-      <Emoji />
+      <Emoji player={player}/>
     </div>
   </div>
-))
+)})
 
 const styles = {
   main: {

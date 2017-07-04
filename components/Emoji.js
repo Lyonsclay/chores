@@ -1,17 +1,39 @@
+import { gql, graphql } from 'react-apollo'
 import React from 'react'
 import { Grid } from 'react-virtualized'
 import Sidebar from './Sidebar'
-import addEmoticon from './AddEmoticon'
+// import addEmoticon, { createEmoticon } from './AddEmoticon'
 
-const handleClick = (event) => addEmoticon(event.currentTarget.innerHTML)
+// const handleClick = (event) => addEmoticon(event.currentTarget.innerHTML)
+// const handleClick = (event) => console.log(event.currentTarget.innerHTML)
+// const handleClick = (event) => console.log(typeof addEmoticon)
+// const handleClick = (e) => createEmoticon(e.target.elements.character.value, 'pirate')
+
 const emoticons = (row, col) => String.fromCodePoint(row * 4 + col + 127902)
 
+export const AddEmoticon = (props) => {
+  const { rowIndex, columnIndex } = props
+  console.log('  add emoticon """" props  """""    :: ', props)
+  function handleAddEmoticon (e) {
+    console.log(e)
+
+    let character = e.target.innerHTML
+
+    props.createEmoticon(character, 'player')
+
+  }
+  return (
+    <div onClick={handleAddEmoticon}>
+      {emoticons(rowIndex, columnIndex)}
+    </div>
+  )
+}
 const EmojiRenderer = ({ columnIndex, rowIndex, key, style }) => (
   <div style={style} key={key}>
-    <a onClick={handleClick}style={styles.emoji}>{emoticons(rowIndex, columnIndex)}</a>
+    {React.createElement(MashRowCol, { rowIndex, columnIndex })}
   </div>
 )
-const EmojiGrid = () =>
+const EmojiGrid = () =>(
   <div style={styles.emoji}>
     <Grid
       columnCount={4}
@@ -21,10 +43,11 @@ const EmojiGrid = () =>
       rowCount={5000}
       rowHeight={70}
       cellRenderer={EmojiRenderer}
-    />
+      />
   </div>
+)
 
-const Emoji = () => <Sidebar name="Emoji" collection={<EmojiGrid/>} />
+const Emoji = () => (<Sidebar name="Emoji" collection={<EmojiGrid/>} />)
 
 export default Emoji
 
@@ -40,3 +63,22 @@ const styles = {
     width: 240,
   },
 }
+
+export const createEmoticon = gql`
+  mutation createEmoticon($character: String!, $player: Player!) {
+    createEmoticon(title: $title) {
+      id
+      character
+      player
+      createdAt
+      }
+  }
+`
+
+const MashRowCol = graphql(createEmoticon, {
+  props: ({ mutate }) => ({
+    createEmoticon: (character, player) => mutate({
+      variables: { character, player },
+    })
+  })
+})(AddEmoticon)

@@ -1,18 +1,20 @@
 import { gql, graphql } from 'react-apollo'
 
-const AddEmoticon = () => ({ createEmoticon }) => {
-  function handleSubmit (e) {
-    e.preventDefault()
+export const AddEmoticon = ({ createEmoticon, ...props }) => {
+  function handleAddEmoticon (e) {
+    console.log(e)
 
     let character = e.target.elements.character.value
 
-    createEmoticon(character, player)
+    createEmoticon(character, 'player')
 
     // reset form
   }
+  return  <div onClick={handleAddEmoticon}>{props.children}</div>
+
 }
 
-const createEmoticon = gql`
+export const createEmoticon = gql`
   mutation createEmoticon($character: String!, $player: Player!) {
     createEmoticon(title: $title) {
       id
@@ -27,15 +29,7 @@ export default graphql(createEmoticon, {
   props: ({ mutate }) => ({
     createEmoticon: (character, player) => mutate({
       variables: { character, player },
-      updateQueries: {
-        allEmoticons: (previousResult, { mutationResult }) => {
-          const newEmoticon = mutationResult.data.createEmoticon
-          return Object.assign({}, previousResult, {
-            // Append the new chore
-            allEmoticons: [newEmoticon, ...previousResult.allEmoticons]
-          })
-        }
-      }
+      
     })
   })
 })(AddEmoticon)

@@ -6,11 +6,6 @@ function AddPlayerEmoji ({ createPlayerEmoji }) {
     let title = e.target.elements.title.value
     let description = e.target.elements.description.value
 
-    if (title === '') {
-      window.alert('Please add at least a title.')
-      return false
-    }
-
     createPlayerEmoji(title, description)
 
     // reset form

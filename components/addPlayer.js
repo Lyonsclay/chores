@@ -35,7 +35,7 @@ const AddPlayer = ({ createPlayer }) => {
         h1 {
           font-size: 20px;
         }
-        input {
+        input j
           margin-bottom: 10px;
         }
         textarea {
@@ -51,7 +51,7 @@ const createPlayer = gql`
   mutation createPlayer($name: String!, $photoUrl: String, $description: String) {
     createPlayer(name: $name, photoUrl: $photoUrl, description: $description) {
       id
-      name
+ name
       photoUrl
       description
       updatedAt
