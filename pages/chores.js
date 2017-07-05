@@ -38,7 +38,6 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: 'rgba(200, 215, 215, 0.8)',
-
   },
   app: {
     display: 'flex',

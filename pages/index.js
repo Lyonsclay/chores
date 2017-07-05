@@ -4,11 +4,13 @@ import AddChore from '../components/AddChore'
 import ChoreList from '../components/ChoreList'
 import AddPlayer from '../components/addPlayer'
 import PlayerList from '../components/PlayerList'
+import PlayerOfTheWeek from '../components/PlayerOfTheWeek'
 import withData from '../lib/withData'
 
 export default withData((props) => (
   <App>
     <Header pathname={props.url.pathname} />
+    <PlayerOfTheWeek />
     <div style={styles.section}>
       <AddChore />
       <ChoreList />
