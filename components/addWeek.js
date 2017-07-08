@@ -1,9 +1,8 @@
 import React from 'react'
-import { gql, graphql } from 'react-apollo'
+import { gql, graphql, compose } from 'react-apollo'
 
-const daPlaya = ({ createWeek, players = [], ...props}) => {
+const daPlaya = ({ createWeek, data: { allPlayers }}) => {
   console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-  console.log(props)
   console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
   function handleSubmit(e) {
     e.preventDefault()
@@ -22,7 +21,7 @@ const daPlaya = ({ createWeek, players = [], ...props}) => {
         <h1>Who's da Playa</h1>
         <div>
           <select>
-            {players.map(player => <option value={player.id}>player.name</option>)}
+            {allPlayers.map(player => <option value={player.id}>player.name</option>)}
           </select>
         </div>
         <textarea placeholder='notes' name='notes' rows='4' cols='30' />
@@ -63,7 +62,7 @@ const allPlayers = gql`
   }
 `
 
-const addWeek = gql`
+const _addWeek = gql`
   mutation createWeek($player: Player, $notes: String) {
     createWeek(player: $player, notes: $notes) {
       id
@@ -75,11 +74,76 @@ const addWeek = gql`
   }
 `
 
-export default graphql(addWeek, {
+// const AddWeek = graphql(_addWeek, {
+//   props: ({ mutate }) => ({
+//     createWeek: (player, notes) => mutate({
+//       variables: { player, notes },
+//     })
+//   })
+// })(daPlaya)
+// const AllPlayers = graphql(_allPlayers, {
+//   options: {
+//     variables: {
+//       skip: 0,
+//     }
+//   },
+//   props: ({ data }) => ({
+//     data,
+//     loadMorePlayers: () => {
+//       return data.fetchMore({
+//         variables: {
+//           skip: data.allPlayers.length
+//         },
+//         updateQuery: (previousResult, { fetchMoreResult }) => {
+//           console.log(previousResult)
+//           if (!fetchMoreResult) {
+//             return previousResult
+//           }
+//           return Object.assign({}, previousResult, {
+//             // Append the new posts results to the old one
+//             allPlayers: [...previousResult.allPlayers, ...fetchMoreResult.allPlayers]
+//           })
+//         }
+//       })
+//     }
+//   })
+// })
+// export default compose(AddWeek, AllPlayers)(daPlaya)
+
+
+const AddWeek = graphql(_addWeek, {
   props: ({ mutate }) => ({
     createWeek: (player, notes) => mutate({
       variables: { player, notes },
     })
   })
-})(daPlaya)
+})
+const AllPlayers = graphql(allPlayers, {
+  options: {
+    variables: {
+      skip: 0,
+    }
+  },
+  props: ({ data }) => ({
+    data,
+    loadMorePlayers: () => {
+      return data.fetchMore({
+        variables: {
+          skip: data.allPlayers.length
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          console.log(previousResult)
+          if (!fetchMoreResult) {
+            return previousResult
+          }
+          return Object.assign({}, previousResult, {
+            // Append the new posts results to the old one
+            allPlayers: [...previousResult.allPlayers, ...fetchMoreResult.allPlayers]
+          })
+        }
+      })
+    }
+  })
+})
+export default compose(AddWeek, AllPlayers)(daPlaya)
 
