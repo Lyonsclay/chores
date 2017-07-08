@@ -1,5 +1,5 @@
 # project: cj3ksckguee5p01616fiw2m4q
-# version: 16
+# version: 24
 
 type File implements Node {
   contentType: String!
@@ -29,19 +29,18 @@ type Chore implements Node {
 
 type Player implements Node {
   id: ID! @isUnique
-  name: String!
+  name: String! @isUnique
   description: String
   photoUrl: String
   emoticons: [Emoticon!]! @relation(name: "Props")
-  daPlaya: PlayerOfTheWeek @relation(name: "DaPlaya")
+  week: Week @relation(name: "daPlaya")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type PlayerOfTheWeek implements Node {
+type Week implements Node {
   id: ID! @isUnique
-  name: String!
-  player: Player! @relation(name: "DaPlaya")
+  player: Player @relation(name: "daPlaya")
   notes: String
   createdAt: DateTime!
   updatedAt: DateTime!

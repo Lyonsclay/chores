@@ -1,7 +1,7 @@
 import { gql, graphql } from 'react-apollo'
 const getPlayer = gql`
-  query playerOfTheWeek {
-    allPlayerOfTheWeeks {
+  query getDaPlaya {
+    allWeeks(first:1) {
       player {
         name
         id
@@ -13,7 +13,10 @@ const getPlayer = gql`
 const playerOfTheWeek = ({ data }) => {
   return (
     <div>
-      <h1>{JSON.stringify(data.allPlayerOfTheWeeks)}Bob</h1> </div>
+      <h1>{data.allWeeks[0].player.name}</h1>
+      <h1>{data.allWeeks[0].player.description}</h1>
+      <h4>{JSON.stringify(data)}</h4>
+    </div>
   )
 }
 

@@ -5,6 +5,7 @@ import ChoreList from '../components/ChoreList'
 import AddPlayer from '../components/addPlayer'
 import PlayerList from '../components/PlayerList'
 import PlayerOfTheWeek from '../components/PlayerOfTheWeek'
+import AddWeek from '../components/addWeek'
 import withData from '../lib/withData'
 
 export default withData((props) => (
@@ -16,7 +17,10 @@ export default withData((props) => (
       <ChoreList />
     </div>
     <div style={styles.section}>
-      <AddPlayer/>
+      <div style={styles.forms}>
+        <AddPlayer/>
+        <AddWeek />
+      </div>
       <PlayerList />
     </div>
   </App>
@@ -30,5 +34,10 @@ const styles = {
     justifyContent: 'space-between',
     maxWidth: '70%',
     marginLeft: '15%',
+  },
+  forms: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginLeft: 50,
   }
 }
