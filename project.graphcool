@@ -1,5 +1,5 @@
 # project: cj3ksckguee5p01616fiw2m4q
-# version: 24
+# version: 26
 
 type File implements Node {
   contentType: String!
@@ -33,14 +33,14 @@ type Player implements Node {
   description: String
   photoUrl: String
   emoticons: [Emoticon!]! @relation(name: "Props")
-  week: Week @relation(name: "daPlaya")
+  week: Week @relation(name: "Playa")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
 type Week implements Node {
   id: ID! @isUnique
-  player: Player @relation(name: "daPlaya")
+  player: Player @relation(name: "Playa")
   notes: String
   createdAt: DateTime!
   updatedAt: DateTime!

@@ -1,18 +1,20 @@
 import React from 'react'
 import { gql, graphql, compose } from 'react-apollo'
 
-const daPlaya = ({ createWeek, data: { allPlayers }}) => {
-  console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-  console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
+const daPlaya = ({ createWeek, data: { allPlayers } }) => {
   function handleSubmit(e) {
     e.preventDefault()
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    console.log(e.target.elements.notes.value)
+    console.log(e.target.elements[0].value)
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
 
-    const notes = e.target.notes.value
-    const player = e.target.player.value
+    const notes = e.target.elements.notes.value
+    const player = e.target.elements[0].value
+
     createWeek(player, notes)
 
     e.target.elements.notes.value = ''
-    e.target.elements.player.value = ''
   }
 
   return (
@@ -21,7 +23,7 @@ const daPlaya = ({ createWeek, data: { allPlayers }}) => {
         <h1>Who's da Playa</h1>
         <div>
           <select>
-            {allPlayers.map(player => <option value={player.id}>player.name</option>)}
+            {allPlayers.map(player => <option value={player.id}>{player.name}</option>)}
           </select>
         </div>
         <textarea placeholder='notes' name='notes' rows='4' cols='30' />
@@ -63,14 +65,15 @@ const allPlayers = gql`
 `
 
 const _addWeek = gql`
-  mutation createWeek($player: Player, $notes: String) {
-    createWeek(player: $player, notes: $notes) {
-      id
-      player
+  mutation createWeek($player: ID!, $notes: String) {
+    createWeek(playerId: $player, notes: $notes) {
+      player {
+        id
+      }
       notes
       updatedAt
       createdAt
-      }
+    }
   }
 `
 
