@@ -9,9 +9,8 @@ import AddWeek from '../components/addWeek'
 import withData from '../lib/withData'
 
 export default withData((props) => (
-  <App>
+  <App style={styles.main}>
     <Header pathname={props.url.pathname} />
-    <PlayerOfTheWeek />
     <div style={styles.section}>
       <AddChore />
       <ChoreList />
@@ -23,12 +22,17 @@ export default withData((props) => (
       </div>
       <PlayerList />
     </div>
+    <PlayerOfTheWeek />
   </App>
 ))
 
 const styles = {
-  section: {
+  main: {
     display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'orange',
+  },
+  section: {
     flexDirection: 'column',
     alignItems: 'top',
     justifyContent: 'space-between',
@@ -36,7 +40,6 @@ const styles = {
     marginLeft: '15%',
   },
   forms: {
-    display: 'flex',
     flexDirection: 'row',
     marginLeft: 50,
   }

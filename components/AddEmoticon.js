@@ -29,7 +29,6 @@ export default graphql(createEmoticon, {
   props: ({ mutate }) => ({
     createEmoticon: (character, player) => mutate({
       variables: { character, player },
-      
     })
   })
 })(AddEmoticon)

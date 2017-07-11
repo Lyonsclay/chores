@@ -48,22 +48,6 @@ const daPlaya = ({ createWeek, data: { allPlayers } }) => {
     </div>
   )
 }
-const allPlayers = gql`
-  query allPlayers($first: Int, $skip: Int) {
-    allPlayers(orderBy: createdAt_DESC, first: $first, skip: $skip) {
-      id
-      name
-      photoUrl
-      description
-      createdAt
-      updatedAt
-    },
-    _allPlayersMeta {
-      count
-    }
-  }
-`
-
 const _addWeek = gql`
   mutation createWeek($player: ID!, $notes: String) {
     createWeek(playerId: $player, notes: $notes) {
@@ -76,44 +60,6 @@ const _addWeek = gql`
     }
   }
 `
-
-// const AddWeek = graphql(_addWeek, {
-//   props: ({ mutate }) => ({
-//     createWeek: (player, notes) => mutate({
-//       variables: { player, notes },
-//     })
-//   })
-// })(daPlaya)
-// const AllPlayers = graphql(_allPlayers, {
-//   options: {
-//     variables: {
-//       skip: 0,
-//     }
-//   },
-//   props: ({ data }) => ({
-//     data,
-//     loadMorePlayers: () => {
-//       return data.fetchMore({
-//         variables: {
-//           skip: data.allPlayers.length
-//         },
-//         updateQuery: (previousResult, { fetchMoreResult }) => {
-//           console.log(previousResult)
-//           if (!fetchMoreResult) {
-//             return previousResult
-//           }
-//           return Object.assign({}, previousResult, {
-//             // Append the new posts results to the old one
-//             allPlayers: [...previousResult.allPlayers, ...fetchMoreResult.allPlayers]
-//           })
-//         }
-//       })
-//     }
-//   })
-// })
-// export default compose(AddWeek, AllPlayers)(daPlaya)
-
-
 const AddWeek = graphql(_addWeek, {
   props: ({ mutate }) => ({
     createWeek: (player, notes) => mutate({
@@ -121,6 +67,20 @@ const AddWeek = graphql(_addWeek, {
     })
   })
 })
+const allPlayers = gql`
+  query allPlayers($first: Int, $skip: Int) {
+    allPlayers(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+      id
+      name
+      photoUrl
+      description
+    },
+    _allPlayersMeta {
+      count
+    }
+  }
+`
+
 const AllPlayers = graphql(allPlayers, {
   options: {
     variables: {

@@ -8,13 +8,11 @@ const Players = ({ data: { allPlayers } }) => {
         The Players
       </div>
       <div style={styles.header}>
-        {
-          allPlayers.map(player => (
-            <img style={styles.img} src={player.photoUrl} />
-          ))
-        }
-    </div>
+        {allPlayers.map(player => (
+          <img style={styles.img} src={player.photoUrl} />
+        ))}
       </div>
+    </div>
   )
 }
 const styles = {

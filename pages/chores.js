@@ -5,6 +5,7 @@ import RightBar from '../components/RightBar'
 import Chores from '../components/Chores'
 import Emoji from '../components/Emoji'
 import Players from '../components/Players'
+import PlayerOfTheWeek from '../components/PlayerOfTheWeek'
 
 export default withData((props) => {
   let player
@@ -20,13 +21,16 @@ export default withData((props) => {
   }
   return (
   <div style={styles.main}>
-    <div style={styles.app}>
+    <div style={styles.content}>
       <Sidebar
         name="Chores"
         collection={<Chores/>}
         style={styles.chores}
         />
-      <Players />
+      <div>
+        <Players />
+        <PlayerOfTheWeek />
+      </div>
       <Emoji player={player}/>
     </div>
   </div>
@@ -35,18 +39,18 @@ export default withData((props) => {
 const styles = {
   main: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'rgba(200, 215, 215, 0.8)',
   },
-  app: {
+  content: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     maxWidth: 1800,
   },
   players: {
-    display: 'flex',
     flexDirection: 'column',
     paddingLeft: 95,
     paddingRight: 95,

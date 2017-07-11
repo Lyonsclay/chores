@@ -12,11 +12,20 @@ const getPlayer = gql`
 `
 const playerOfTheWeek = ({ data }) => {
   return (
-    <div>
-      <h1>{data.allWeeks[0].player.name}</h1>
-      <h1>{data.allWeeks[0].player.description}</h1>
+    <div style={styles.player}>
+      <h2>Playa of the Week</h2>
+      <h3>{data.allWeeks[0].player.name}</h3>
+      <h4>{data.allWeeks[0].player.description}</h4>
     </div>
   )
+}
+
+const styles = {
+  player: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }
 }
 
 

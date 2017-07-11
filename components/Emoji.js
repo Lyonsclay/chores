@@ -1,4 +1,4 @@
-import { gql, graphql } from 'react-apollo'
+import { gql, graphql, compose } from 'react-apollo'
 import React from 'react'
 import { Grid } from 'react-virtualized'
 import Sidebar from './Sidebar'
@@ -18,8 +18,9 @@ export const AddEmoticon = (props) => {
     console.log(e)
 
     let character = e.target.innerHTML
+    const player = props.data.allWeeks[0].player.id
 
-    props.createEmoticon(character, 'player')
+    props.createEmoticon(character, player)
 
   }
   return (
@@ -63,22 +64,43 @@ const styles = {
     width: 240,
   },
 }
-
+const getPlayer = gql`
+  query getDaPlaya {
+    allWeeks(last:1) {
+      player {
+        name
+        id
+        description
+      }
+    }
+  }
+`
 export const createEmoticon = gql`
-  mutation createEmoticon($character: String!, $player: Player!) {
-    createEmoticon(title: $title) {
+  mutation createEmoticon($character: String!, $player: ID!) {
+    createEmoticon(character: $character, playerId: $player) {
       id
       character
-      player
+      player {
+        id
+      }
       createdAt
       }
   }
 `
-
-const MashRowCol = graphql(createEmoticon, {
+const MakeEmoticon = graphql(createEmoticon, {
   props: ({ mutate }) => ({
     createEmoticon: (character, player) => mutate({
       variables: { character, player },
     })
   })
-})(AddEmoticon)
+})
+const MashRowCol = compose(MakeEmoticon, graphql(getPlayer))(AddEmoticon)
+
+// const MashRowCol = graphql(createEmoticon, {
+//   props: ({ mutate }) => ({
+//     createEmoticon: (character, player) => mutate({
+//       variables: { character, player },
+//     })
+//   })
+// })(AddEmoticon)
+
