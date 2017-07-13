@@ -1,40 +1,37 @@
 import withData from '../lib/withData'
 import App from '../components/App'
 import Sidebar from '../components/Sidebar'
-import RightBar from '../components/RightBar'
 import Chores from '../components/Chores'
 import Emoji from '../components/Emoji'
 import Players from '../components/Players'
 import PlayerOfTheWeek from '../components/PlayerOfTheWeek'
+import Buckets from '../components/Buckets'
 
 export default withData((props) => {
   let player
-  if (props &&
-      props.serverState &&
-      props.serverState.apollo &&
-      props.serverState.apollo.data && 
-      props.serverState.apollo.data.allPlayers
-     ) {
+  try {
     player = props.serverState.apollo.data.allPlayers[1]
-  } else {
+  }
+  catch (e) {
     player = {}
   }
   return (
-  <div style={styles.main}>
-    <div style={styles.content}>
-      <Sidebar
-        name="Chores"
-        collection={<Chores/>}
-        style={styles.chores}
-        />
-      <div>
-        <Players />
-        <PlayerOfTheWeek />
+    <div style={styles.main}>
+      <div style={styles.content}>
+        <Sidebar
+          name="Chores"
+          collection={<Chores/>}
+          style={styles.chores}
+          />
+        <div>
+          <Players />
+          <PlayerOfTheWeek />
+          <Buckets />
+        </div>
+        <Emoji player={player}/>
       </div>
-      <Emoji player={player}/>
     </div>
-  </div>
-)})
+  )})
 
 const styles = {
   main: {
