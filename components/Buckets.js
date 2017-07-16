@@ -1,7 +1,7 @@
-import { gql, graphql } from 'react-apollo'
+import { gql, graphql, compose } from 'react-apollo'
 const getPlaya = gql`
   query getDaPlaya {
-    allWeeks(last:1) {
+    allWeeks {
       player {
         name
         id
@@ -15,33 +15,38 @@ const allPlayers = gql`
     allPlayers {
       name
       id
-    }
-  }
-`
-const getPlayerEmoji = gql`
-  query getPlayerEmoji($playerName: String!) {
-    allEmoticons(name: $playerName) {
-      player {
-        name
-        id
-        description
+      emoticons {
+        character
       }
     }
   }
 `
-const Buckets = ({ data }) => (
+const Bucket = ({ player }) => (
+  <div style={styles.bucket}>
+    {player.emoticons.map(emoticon => emoticon.character)}
+  </div>)
+
+const BucketsContainer = ({ data }) => (
   <div style={styles.collection}>
-    {JSON.stringify(data)}
-    {data.allPlayers.map(player => [0, 1, 2].map(emoticon => (
-      <div style={styles.bucket}>{emoticon}</div>)
-    ))}
-      </div>
+    {data.allPlayers.map(player => (<Bucket player={player} />))}
+  </div>
 )
 
 const styles = {
+  collection: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    height: '100%',
+  },
   bucket: {
+    flexDirection: 'row',
+    flexFlow: 'wrap',
+    flex: 1,
     border: '2px solid gray',
+    fontSize: 80,
+    maxHeight: 300,
   },
 }
 
-export default graphql(allPlayers, getPlayerEmoji)(Buckets)
+export default compose(graphql(getPlaya), graphql(allPlayers))(BucketsContainer)
